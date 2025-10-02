@@ -58,6 +58,7 @@ export default function Login({ onToggle }: { onToggle: () => void }) {
                   className="w-full pl-11 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   placeholder="your@email.com"
                   required
+                  autoComplete="email"
                 />
               </div>
             </div>
@@ -73,6 +74,7 @@ export default function Login({ onToggle }: { onToggle: () => void }) {
                   className="w-full pl-11 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   placeholder="••••••••"
                   required
+                  autoComplete="current-password"
                 />
               </div>
             </div>

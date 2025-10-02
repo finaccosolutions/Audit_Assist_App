@@ -11,7 +11,7 @@ interface AuthContextType {
   profile: UserProfile | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
-  signUp: (email: string, password: string, fullName: string, companyName: string) => Promise<{ error: Error | null }>;
+  signUp: (email: string, password: string, fullName: string, companyName: string) => Promise<{ error: Error | null; email: string | null; requiresVerification: boolean }>;
   signOut: () => Promise<void>;
   updateProfile: (updates: Partial<UserProfile>) => Promise<{ error: Error | null }>;
 }
@@ -85,33 +85,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const signUp = async (email: string, password: string, fullName: string, companyName: string) => {
-    try {
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email,
-        password,
-      });
-
-      if (authError) throw authError;
-      if (!authData.user) throw new Error('User creation failed');
-
-      const { error: profileError } = await supabase
-        .from('user_profiles')
-        .insert({
-          id: authData.user.id,
-          email,
+const signUp = async (email: string, password: string, fullName: string, companyName: string) => {
+  try {
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
           full_name: fullName,
           company_name: companyName,
-        });
+        }
+      }
+    });
 
-      if (profileError) throw profileError;
+    if (authError) throw authError;
+    if (!authData.user) throw new Error('User creation failed');
 
-      await loadProfile(authData.user.id);
-      return { error: null };
-    } catch (error) {
-      return { error: error as Error };
-    }
-  };
+    // Don't load profile or set session - user needs to verify email first
+    // The trigger handles profile creation
+    return { 
+      error: null, 
+      email: email,
+      requiresVerification: true 
+    };
+  } catch (error) {
+    return { 
+      error: error as Error, 
+      email: null,
+      requiresVerification: false 
+    };
+  }
+};
+
+
 
   const signOut = async () => {
     await supabase.auth.signOut();
