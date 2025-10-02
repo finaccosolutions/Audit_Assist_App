@@ -21,9 +21,8 @@ const menuItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'leads', label: 'Leads', icon: UserPlus },
   { id: 'customers', label: 'Customers', icon: Users },
-  { id: 'services', label: 'Services', icon: Briefcase },
+  { id: 'services', label: 'Services', icon: Briefcase }, // Now includes VAT Filing
   { id: 'tasks', label: 'Tasks', icon: ClipboardList },
-  { id: 'vat-filing', label: 'VAT Filing', icon: FileText },
   { id: 'invoices', label: 'Invoices', icon: Receipt },
   { id: 'reports', label: 'Reports', icon: BarChart3 },
   { id: 'settings', label: 'Settings', icon: Settings },

@@ -8,6 +8,12 @@ import LeadsPage from './pages/Leads/LeadsPage';
 import CustomersPage from './pages/Customers/CustomersPage';
 import VATFilingPage from './pages/VATFiling/VATFilingPage';
 import SimplePage from './pages/SimplePage';
+import ServicesPage from './pages/Services/ServicesPage';
+import TasksPage from './pages/Tasks/TasksPage';
+import InvoicesPage from './pages/Invoices/InvoicesPage';
+import ReportsPage from './pages/Reports/ReportsPage';
+import SettingsPage from './pages/Settings/SettingsPage';
+
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -33,30 +39,28 @@ function AppContent() {
     );
   }
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'dashboard':
-        return <Dashboard />;
-      case 'leads':
-        return <LeadsPage />;
-      case 'customers':
-        return <CustomersPage />;
-      case 'services':
-        return <SimplePage title="Services" subtitle="Manage your service offerings" />;
-      case 'tasks':
-        return <SimplePage title="Tasks & Assignments" subtitle="Track work assignments and progress" />;
-      case 'vat-filing':
-        return <VATFilingPage />;
-      case 'invoices':
-        return <SimplePage title="Invoices & Billing" subtitle="Manage invoices and payments" />;
-      case 'reports':
-        return <SimplePage title="Reports & Analytics" subtitle="View comprehensive business reports" />;
-      case 'settings':
-        return <SimplePage title="Settings" subtitle="Manage your account and company settings" />;
-      default:
-        return <Dashboard />;
-    }
-  };
+const renderPage = () => {
+  switch (currentPage) {
+    case 'dashboard':
+      return <Dashboard onNavigate={setCurrentPage} />;
+    case 'leads':
+      return <LeadsPage />;
+    case 'customers':
+      return <CustomersPage />;
+    case 'services':
+      return <ServicesPage />; // Changed from SimplePage
+    case 'tasks':
+      return <TasksPage />; // Changed from SimplePage
+    case 'invoices':
+      return <InvoicesPage />; // Changed from SimplePage
+    case 'reports':
+      return <ReportsPage />; // Changed from SimplePage
+    case 'settings':
+      return <SettingsPage />; // Changed from SimplePage
+    default:
+      return <Dashboard onNavigate={setCurrentPage} />;
+  }
+};
 
   return (
     <div className="flex min-h-screen bg-slate-100">

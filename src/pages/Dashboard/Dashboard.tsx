@@ -59,12 +59,54 @@ export default function Dashboard() {
   };
 
   const statCards = [
-    { label: 'Active Customers', value: stats.totalCustomers, icon: Users, color: 'bg-blue-500', change: '+12%' },
-    { label: 'Active Leads', value: stats.activeLeads, icon: UserPlus, color: 'bg-green-500', change: '+8%' },
-    { label: 'Active Services', value: stats.activeServices, icon: Briefcase, color: 'bg-orange-500', change: '+5%' },
-    { label: 'Pending Invoices', value: stats.pendingInvoices, icon: Receipt, color: 'bg-red-500', change: '+3%' },
-    { label: 'Total Revenue Pending', value: `$${stats.totalRevenue.toFixed(2)}`, icon: TrendingUp, color: 'bg-emerald-500', change: '+15%' },
-    { label: 'Pending Tasks', value: stats.pendingTasks, icon: AlertCircle, color: 'bg-amber-500', change: '+2%' },
+    { 
+      label: 'Active Customers', 
+      value: stats.totalCustomers, 
+      icon: Users, 
+      color: 'bg-blue-500', 
+      change: '+12%',
+      onClick: () => onNavigate('customers')
+    },
+    { 
+      label: 'Active Leads', 
+      value: stats.activeLeads, 
+      icon: UserPlus, 
+      color: 'bg-green-500', 
+      change: '+8%',
+      onClick: () => onNavigate('leads')
+    },
+    { 
+      label: 'Active Services', 
+      value: stats.activeServices, 
+      icon: Briefcase, 
+      color: 'bg-orange-500', 
+      change: '+5%',
+      onClick: () => onNavigate('services')
+    },
+    { 
+      label: 'Pending Invoices', 
+      value: stats.pendingInvoices, 
+      icon: Receipt, 
+      color: 'bg-red-500', 
+      change: '+3%',
+      onClick: () => onNavigate('invoices')
+    },
+    { 
+      label: 'Total Revenue Pending', 
+      value: `$${stats.totalRevenue.toFixed(2)}`, 
+      icon: TrendingUp, 
+      color: 'bg-emerald-500', 
+      change: '+15%',
+      onClick: () => onNavigate('reports')
+    },
+    { 
+      label: 'Pending Tasks', 
+      value: stats.pendingTasks, 
+      icon: AlertCircle, 
+      color: 'bg-amber-500', 
+      change: '+2%',
+      onClick: () => onNavigate('tasks')
+    },
   ];
 
   if (loading) {
@@ -86,7 +128,8 @@ export default function Dashboard() {
             return (
               <div
                 key={index}
-                className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                onClick={stat.onClick}
+                className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer"
               >
                 <div className="flex items-center justify-between mb-4">
                   <div className={`p-3 ${stat.color} rounded-lg`}>
