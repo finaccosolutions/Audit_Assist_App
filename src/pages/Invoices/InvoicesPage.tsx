@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Plus, Search, Filter, Download, Send, DollarSign, FileText } from 'lucide-react';
-import { Bolt Database } from '../../lib/Bolt Database';
+import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import Header from '../../components/Layout/Header';
 import type { Database } from '../../lib/database.types';
@@ -26,7 +26,7 @@ export default function InvoicesPage() {
 
   const loadInvoices = async () => {
     try {
-      const { data, error } = await Bolt Database
+      const { data, error } = await supabase
         .from('invoices')
         .select(`
           *,
@@ -50,7 +50,7 @@ export default function InvoicesPage() {
 
   const loadCustomers = async () => {
     try {
-      const { data } = await Bolt Database
+      const { data } = await supabase
         .from('customers')
         .select('*')
         .eq('user_id', user!.id)
@@ -311,7 +311,7 @@ function InvoiceFormModal({
     try {
       const invoiceNumber = generateInvoiceNumber();
       
-      const { error } = await Bolt Database
+      const { error } = await supabase
         .from('invoices')
         .insert({
           invoice_number: invoiceNumber,

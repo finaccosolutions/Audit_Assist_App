@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { User, Building, Mail, Phone, Lock, Save, Bell, CreditCard } from 'lucide-react';
-import { Bolt Database } from '../../lib/Bolt Database';
+import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import Header from '../../components/Layout/Header';
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { TrendingUp, DollarSign, Users, FileText, Download, Calendar } from 'lucide-react';
-import { Bolt Database } from '../../lib/Bolt Database';
+import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import Header from '../../components/Layout/Header';
 
@@ -42,7 +42,7 @@ export default function ReportsPage() {
   const loadReportData = async () => {
     try {
       // Fetch invoices
-      const { data: invoices } = await Bolt Database
+      const { data: invoices } = await supabase
         .from('invoices')
         .select('*')
         .eq('user_id', user!.id)
@@ -50,7 +50,7 @@ export default function ReportsPage() {
         .lte('invoice_date', dateRange.to);
 
       // Fetch customers
-      const { data: customers } = await Bolt Database
+      const { data: customers } = await supabase
         .from('customers')
         .select('id')
         .eq('user_id', user!.id)

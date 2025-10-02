@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Plus, Search, Filter, Edit, Trash2, DollarSign, TrendingUp } from 'lucide-react';
-import { Bolt Database } from '../../lib/Bolt Database';
+import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import Header from '../../components/Layout/Header';
 import type { Database } from '../../lib/database.types';
@@ -37,7 +37,7 @@ export default function ServicesPage() {
 
   const loadServices = async () => {
     try {
-      const { data, error } = await Bolt Database
+      const { data, error } = await supabase
         .from('services')
         .select('*')
         .eq('user_id', user!.id)
@@ -54,12 +54,12 @@ export default function ServicesPage() {
 
   const loadStats = async () => {
     try {
-      const { data: servicesData } = await Bolt Database
+      const { data: servicesData } = await supabase
         .from('services')
         .select('*')
         .eq('user_id', user!.id);
 
-      const { data: customerServices } = await Bolt Database
+      const { data: customerServices } = await supabase
         .from('customer_services')
         .select('price, service_id, services(name)')
         .eq('status', 'active');
@@ -279,7 +279,7 @@ function ServiceFormModal({
     setLoading(true);
 
     try {
-      const { error } = await Bolt Database
+      const { error } = await supabase
         .from('services')
         .insert({
           ...formData,
